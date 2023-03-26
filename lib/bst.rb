@@ -37,7 +37,15 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
-  def insert
+  def insert(root, value)
+    root = Node.new(value) if root.nil?
+
+    if value < root.data
+      root.left = insert(root.left, value)
+    elsif value > root.data
+      root.right = insert(root.right, value)
+    end
+    root
   end
 
   def delete
@@ -46,8 +54,11 @@ end
 
 
 # Tests
-arr = [1,2,3,4,5]
+arr = Array.new(11) { |ele| ele + 1}
 tree = Tree.new(arr)
 tree.build_tree
+# tree.insert(tree.root, 15)
+# tree.insert(tree.root, -16)
+# tree.insert(tree.root, 22)
+# tree.insert(tree.root, -2)
 tree.pretty_print
-p tree
