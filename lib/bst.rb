@@ -48,7 +48,8 @@ class Tree
     root
   end
 
-  def delete
+  def delete(value, root = @root)
+    
   end
 end
 
@@ -61,4 +62,5 @@ tree.build_tree
 # tree.insert(tree.root, -16)
 # tree.insert(tree.root, 22)
 # tree.insert(tree.root, -2)
+tree.delete(8)
 tree.pretty_print
