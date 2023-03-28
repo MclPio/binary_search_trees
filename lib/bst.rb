@@ -80,6 +80,7 @@ class Tree
     root
   end
 
+  # accepts value and returns Node object with given value, else nil
   def find(value, root = @root)
     return nil if root.nil?
 
@@ -90,6 +91,25 @@ class Tree
     elsif value == root.data
       root
     end
+  end
+
+  def level_order
+    current_node = root
+    q = []
+    q << current_node
+    result = []
+    while !q.empty?
+      temp_node = q[0]
+      result << temp_node.data
+      if !temp_node.left.nil?
+        q << temp_node.left
+      end
+      if !temp_node.right.nil?
+        q << temp_node.right
+      end
+      q.shift
+    end
+    result
   end
 end
 
@@ -104,8 +124,9 @@ tree.insert(tree.root, 22)
 tree.insert(tree.root, -2)
 tree.delete(6)
 tree.delete(9)
-tree.pretty_print
 # navigating through class method from Node and class method from Tree result in 
 # same object
 p tree.root.right.right.right.right
 p tree.find(22)
+tree.pretty_print
+p tree.level_order
