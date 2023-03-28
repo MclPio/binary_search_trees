@@ -48,8 +48,36 @@ class Tree
     root
   end
 
+  def minValueNode(node)
+    current = node
+    while(!current.left.nil?)
+      current = current.left
+    end
+    current
+  end
+
   def delete(value, root = @root)
-    
+    return root if root.nil?
+
+    if value < root.data
+      root.left = delete(value, root.left)
+    elsif value > root.data
+      root.right = delete(value, root.right)
+    else
+      if root.left.nil?
+        temp = root.right
+        root = nil
+        return temp
+      elsif root.right.nil?
+        temp = root.left
+        root = nil
+        return temp
+      end
+      temp = minValueNode(root.right)
+      root.data = temp.data
+      root.right = delete(temp.data, root.right)
+    end
+    root
   end
 end
 
@@ -58,9 +86,10 @@ end
 arr = Array.new(11) { |ele| ele + 1}
 tree = Tree.new(arr)
 tree.build_tree
-# tree.insert(tree.root, 15)
-# tree.insert(tree.root, -16)
-# tree.insert(tree.root, 22)
-# tree.insert(tree.root, -2)
-tree.delete(8)
+tree.insert(tree.root, 15)
+tree.insert(tree.root, -16)
+tree.insert(tree.root, 22)
+tree.insert(tree.root, -2)
+tree.delete(6)
+tree.delete(9)
 tree.pretty_print
