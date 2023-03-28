@@ -79,6 +79,18 @@ class Tree
     end
     root
   end
+
+  def find(value, root = @root)
+    return nil if root.nil?
+
+    if value < root.data
+      find(value, root.left)
+    elsif value > root.data
+      find(value, root.right)
+    elsif value == root.data
+      root
+    end
+  end
 end
 
 
@@ -93,3 +105,7 @@ tree.insert(tree.root, -2)
 tree.delete(6)
 tree.delete(9)
 tree.pretty_print
+# navigating through class method from Node and class method from Tree result in 
+# same object
+p tree.root.right.right.right.right
+p tree.find(22)
