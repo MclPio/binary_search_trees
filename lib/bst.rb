@@ -119,7 +119,7 @@ class Tree
     result = []
 
     traversal = lambda do |node|
-      return node if node.nil?
+      return if node.nil?
 
       traversal.call(node.left)
       result << node.data
@@ -134,17 +134,17 @@ class Tree
     result = []
     stack = []
     current = root
-
-    while !current.nil? || stack.empty?
-      while !current.nil?
-        stack.append(current)
+    until current.nil? && stack.empty?
+      until current.nil?
+        stack << current
         current = current.left
       end
       current = stack.pop
-      result.append(current.data)
+      yield current.data if block_given?
+      result << current.data
       current = current.right
     end
-    return result
+    result unless block_given?
   end
 end
 
@@ -161,8 +161,10 @@ tree.delete(6)
 tree.delete(9)
 # navigating through class method from Node and class method from Tree result in 
 # same object
-tree.root.right.right.right.right
+tree = Tree.new(arr)
+tree.build_tree
 tree.find(22)
 tree.level_order {|i| i+2}
 tree.pretty_print
-p tree.inorder
+ # p tree.inorder
+p tree.inorder_iterative
