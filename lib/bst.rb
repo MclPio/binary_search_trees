@@ -164,6 +164,7 @@ class Tree
     result unless block_given?
   end
 
+  #left, right, root, no block returns an array
   def postorder(root = @root)
     result = []
 
@@ -177,6 +178,22 @@ class Tree
     end
     traversal.call(root)
     result unless block_given?
+  end
+
+  def height(root = @root)
+    max_height = 0
+    current_height = 0
+    traversal = lambda do |node|
+      return if node.nil?
+
+      traversal.call(node.left)
+      current_height += 1
+      traversal.call(node.right)
+      max_height = current_height if current_height > max_height
+      current_height = 0
+    end
+    traversal.call(root)
+    max_height
   end
 end
 
@@ -202,3 +219,4 @@ tree.pretty_print
 # p tree.inorder_iterative
 # p tree.preorder
 # p tree.postorder
+# p tree.height
