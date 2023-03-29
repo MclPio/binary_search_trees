@@ -129,6 +129,22 @@ class Tree
     result unless block_given?
   end
 
+  def inorder_iterative(root = @root)
+    result = []
+    stack = []
+    current = root
+
+    while !current.nil? || stack.empty?
+      while !current.nil?
+        stack.append(current)
+        current = current.left
+      end
+      current = stack.pop
+      result.append(current.data)
+      current = current.right
+    end
+    return result
+  end
 end
 
 
@@ -148,4 +164,6 @@ tree.root.right.right.right.right
 tree.find(22)
 tree.level_order {|i| i+2}
 tree.pretty_print
-p tree.inorder {|i| p i }
+tree.inorder {|i| p i }
+p tree.inorder_iterative
+
