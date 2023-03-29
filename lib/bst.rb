@@ -163,6 +163,21 @@ class Tree
     traversal.call(root)
     result unless block_given?
   end
+
+  def postorder(root = @root)
+    result = []
+
+    traversal = lambda do |node|
+      return if node.nil?
+
+      traversal.call(node.left)
+      traversal.call(node.right)
+      yield node.data if block_given?
+      result << node.data
+    end
+    traversal.call(root)
+    result unless block_given?
+  end
 end
 
 
@@ -185,4 +200,5 @@ tree.level_order {|i| i+2}
 tree.pretty_print
 # p tree.inorder
 # p tree.inorder_iterative
-p tree.preorder
+# p tree.preorder
+# p tree.postorder
