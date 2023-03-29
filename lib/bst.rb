@@ -93,6 +93,7 @@ class Tree
     end
   end
 
+  # breadth-first level order. accepts a block. Without block, returns array
   def level_order
     current_node = root
     q = []
@@ -100,6 +101,7 @@ class Tree
     result = []
     while !q.empty?
       temp_node = q[0]
+      yield temp_node.data if block_given?
       result << temp_node.data
       if !temp_node.left.nil?
         q << temp_node.left
@@ -109,7 +111,7 @@ class Tree
       end
       q.shift
     end
-    result
+    result if !block_given?
   end
 end
 
@@ -129,4 +131,4 @@ tree.delete(9)
 p tree.root.right.right.right.right
 p tree.find(22)
 tree.pretty_print
-p tree.level_order
+p tree.level_order {|i| i+2}
