@@ -118,13 +118,14 @@ class Tree
   def inorder(root = @root)
     result = []
 
-    traversal = ->(root) {
-      return root if root.nil?
-      traversal.call(root.left)
-      result << root.data
-      yield root.data unless !block_given?
-      traversal.call(root.right)
-    }
+    traversal = lambda do |node|
+      return node if node.nil?
+
+      traversal.call(node.left)
+      result << node.data
+      yield node.data if block_given?
+      traversal.call(node.right)
+    end
     traversal.call(root)
     result unless block_given?
   end
@@ -164,6 +165,4 @@ tree.root.right.right.right.right
 tree.find(22)
 tree.level_order {|i| i+2}
 tree.pretty_print
-tree.inorder {|i| p i }
-p tree.inorder_iterative
-
+p tree.inorder
