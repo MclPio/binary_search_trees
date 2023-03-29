@@ -130,6 +130,7 @@ class Tree
     result unless block_given?
   end
 
+  # left, root, right traversal, no block returns an array
   def inorder_iterative(root = @root)
     result = []
     stack = []
@@ -144,6 +145,22 @@ class Tree
       result << current.data
       current = current.right
     end
+    result unless block_given?
+  end
+
+  # root, left, right, no block returns array
+  def preorder(root = @root)
+    result = []
+
+    traversal = lambda do |node|
+      return if node.nil?
+
+      result << node.data
+      yield node.data if block_given?
+      traversal.call(node.left)
+      traversal.call(node.right)
+    end
+    traversal.call(root)
     result unless block_given?
   end
 end
@@ -166,5 +183,6 @@ tree.build_tree
 tree.find(22)
 tree.level_order {|i| i+2}
 tree.pretty_print
- # p tree.inorder
-p tree.inorder_iterative
+# p tree.inorder
+# p tree.inorder_iterative
+p tree.preorder
