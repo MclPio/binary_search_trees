@@ -113,6 +113,22 @@ class Tree
     end
     result if !block_given?
   end
+
+  # left, root, right traversal, no block returns an array
+  def inorder(root = @root)
+    result = []
+
+    traversal = ->(root) {
+      return root if root.nil?
+      traversal.call(root.left)
+      result << root.data
+      yield root.data unless !block_given?
+      traversal.call(root.right)
+    }
+    traversal.call(root)
+    result unless block_given?
+  end
+
 end
 
 
@@ -128,7 +144,8 @@ tree.delete(6)
 tree.delete(9)
 # navigating through class method from Node and class method from Tree result in 
 # same object
-p tree.root.right.right.right.right
-p tree.find(22)
+tree.root.right.right.right.right
+tree.find(22)
+tree.level_order {|i| i+2}
 tree.pretty_print
-p tree.level_order {|i| i+2}
+p tree.inorder {|i| p i }
