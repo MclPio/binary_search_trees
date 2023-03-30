@@ -181,19 +181,12 @@ class Tree
   end
 
   def height(root = @root)
-    max_height = 0
-    current_height = -1
-    traversal = lambda do |node|
-      return if node.nil?
+    return 0 if root.nil?
 
-      traversal.call(node.left)
-      current_height += 1
-      traversal.call(node.right)
-      max_height = current_height if current_height > max_height
-      current_height = 0
-    end
-    traversal.call(root)
-    max_height
+    left_height = height(root.left)
+    right_height = height(root.right)
+
+    [left_height, right_height].max + 1
   end
 
   def depth(root = @root)
@@ -222,4 +215,5 @@ tree.pretty_print
 # p tree.inorder_iterative
 # p tree.preorder
 # p tree.postorder
-p tree.height(tree.find(3))
+# p tree.height
+
