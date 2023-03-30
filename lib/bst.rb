@@ -206,6 +206,20 @@ class Tree
     inner.call(value, root)
     depth
   end
+
+  def balanced?(node = @root)
+    return 0 if node.nil?
+
+    left_height = balanced?(node.left)
+    return -1 if left_height == -1
+
+    right_height = balanced?(node.right)
+    return -1 if right_height == -1
+
+    return -1 if (left_height - right_height).abs > 1
+
+    return [left_height, right_height].max + 1
+  end
 end
 
 
@@ -225,10 +239,11 @@ tree = Tree.new(arr)
 tree.build_tree
 tree.find(22)
 tree.level_order {|i| i+2}
-tree.pretty_print
 # p tree.inorder
 # p tree.inorder_iterative
 # p tree.preorder
 # p tree.postorder
 # p tree.height
 # p tree.depth(11)
+tree.pretty_print
+p tree.balanced?
