@@ -189,7 +189,22 @@ class Tree
     [left_height, right_height].max + 1
   end
 
-  def depth(root = @root)
+  def depth(value, root = @root)
+    depth = 0
+    return nil if root.nil?
+
+    inner = lambda do |val, node|
+      depth += 1
+      if val < node.data
+        inner.call(val, node.left)
+      elsif val > node.data
+        inner.call(val, node.right)
+      elsif val == node.data
+        node
+      end
+    end
+    inner.call(value, root)
+    depth
   end
 end
 
@@ -216,4 +231,4 @@ tree.pretty_print
 # p tree.preorder
 # p tree.postorder
 # p tree.height
-
+# p tree.depth(11)
