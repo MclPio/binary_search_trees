@@ -226,35 +226,21 @@ class Tree
   end
 end
 
+# Driver Script
 
-# Tests
-arr = Array.new(11) { |ele| ele + 1}
+# Array.new(15) { rand(1..100)}).sort.uniq
+arr = [7, 14, 15, 19, 21, 24, 29, 41, 52, 57, 69, 70, 80, 98]
 tree = Tree.new(arr)
 tree.build_tree
-tree.insert(tree.root, 15)
-tree.insert(tree.root, -16)
-tree.insert(tree.root, 22)
-tree.insert(tree.root, -2)
-tree.delete(6)
-tree.delete(9)
-# navigating through class method from Node and class method from Tree result in 
-# same object
-tree = Tree.new(arr)
-tree.build_tree
-tree.find(22)
-tree.level_order {|i| i+2}
-# p tree.inorder
-# p tree.inorder_iterative
-# p tree.preorder
-# p tree.postorder
-# p tree.height
-# p tree.depth(11)
-tree.insert(tree.root, 15)
-tree.insert(tree.root, -16)
-tree.insert(tree.root, 22)
-tree.insert(tree.root, -2)
-tree.pretty_print
+p tree.balanced?
+puts "level_order: #{tree.level_order} \npre_order: #{tree.preorder} \npost_order: #{tree.postorder} \nin_order: #{tree.inorder}"
+tree.insert(tree.root, 101)
+tree.insert(tree.root, 102)
+tree.insert(tree.root, 103)
+tree.insert(tree.root, 104)
+tree.insert(tree.root, 105)
 p tree.balanced?
 tree.rebalance
 p tree.balanced?
+puts "level_order: #{tree.level_order} \npre_order: #{tree.preorder} \npost_order: #{tree.postorder} \nin_order: #{tree.inorder}"
 tree.pretty_print
