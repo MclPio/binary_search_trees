@@ -220,6 +220,10 @@ class Tree
 
     return [left_height, right_height].max + 1
   end
+
+  def rebalance
+    build_tree(inorder(@root))
+  end
 end
 
 
@@ -245,5 +249,12 @@ tree.level_order {|i| i+2}
 # p tree.postorder
 # p tree.height
 # p tree.depth(11)
+tree.insert(tree.root, 15)
+tree.insert(tree.root, -16)
+tree.insert(tree.root, 22)
+tree.insert(tree.root, -2)
 tree.pretty_print
 p tree.balanced?
+tree.rebalance
+p tree.balanced?
+tree.pretty_print
